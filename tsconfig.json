@@ -6,21 +6,22 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,  // 🔹 Adicione isso para evitar erros de importação
-    "moduleResolution": "node",  // 🔹 Garante que os módulos sejam resolvidos corretamente
-    "target": "ES2023",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "target": "ES2020",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./dist", // Certifique-se de que está apontando para a pasta dist
     "baseUrl": "./",
-    "rootDir": "./src",  // 🔹 Define a raiz do código TypeScript
+    "rootDir": "./src", // Certifique-se de que está apontando para a pasta src
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "noEmitOnError": true // Impede a geração da pasta dist se houver erros
   },
-  "include": ["src"],  // 🔹 Garante que só os arquivos dentro de "src" sejam compilados
-  "exclude": ["node_modules", "dist"]  // 🔹 Evita problemas com módulos externos
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"] // Exclui a pasta dist da compilação
 }

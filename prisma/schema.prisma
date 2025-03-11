@@ -14,60 +14,84 @@ datasource db {
 }
 
 model Usuario {
-  id          Int      @id @default(autoincrement())
-  nome        String
-  email       String   @unique
-  senhaHash   String
-  dataCriacao DateTime @default(now())
-  contas      Conta[]
-  orcamentos  Orcamento[]
-  metas       MetaFinanceira[]
+  id              Int              @id @default(autoincrement())
+  nome            String
+  email           String           @unique
+  senha           String
+  dataCriacao     DateTime         @default(now())
+  dataAtualizacao DateTime         @updatedAt
+  contas          Conta[]
+  orcamentos      Orcamento[]
+  metas           MetaFinanceira[]
+
+  @@map("usuario")
 }
 
 model Conta {
-  id     Int      @id @default(autoincrement())
-  nome   String
-  saldo  Float
-  tipo   String
-  usuarioId   Int
-  usuario     Usuario   @relation(fields: [usuarioId], references: [id])
-  transacoes  Transacao[]
+  id         Int         @id @default(autoincrement())
+  nome       String
+  saldo      Float
+  tipo       String
+  usuarioId  Int
+  usuario    Usuario     @relation(fields: [usuarioId], references: [id])
+  transacoes Transacao[]
+
+  @@map("conta")
 }
 
 model Transacao {
-  id         Int      @id @default(autoincrement())
-  valor      Float
-  data       DateTime @default(now())
-  tipo       String
-  contaId    Int
-  conta      Conta   @relation(fields: [contaId], references: [id])
+  id          Int       @id @default(autoincrement())
+  valor       Float
+  data        DateTime  @default(now())
+  tipo        String
+  contaId     Int
+  conta       Conta     @relation(fields: [contaId], references: [id])
   categoriaId Int
-  categoria  Categoria @relation(fields: [categoriaId], references: [id])
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  @@map("transacao")
 }
 
 model Categoria {
-  id        Int      @id @default(autoincrement())
-  nome      String
-  descricao String?
+  id         Int         @id @default(autoincrement())
+  nome       String
+  descricao  String?
   transacoes Transacao[]
-  orcamentos  Orcamento[]
+  orcamentos Orcamento[]
+
+  @@map("categoria")
 }
 
 model Orcamento {
-  id           Int      @id @default(autoincrement())
-  valorLimite  Float
-  periodo      String
-  usuarioId    Int
-  usuario      Usuario   @relation(fields: [usuarioId], references: [id])
-  categoriaId  Int
-  categoria    Categoria @relation(fields: [categoriaId], references: [id])
+  id          Int       @id @default(autoincrement())
+  valorLimite Float
+  periodo     String
+  usuarioId   Int
+  usuario     Usuario   @relation(fields: [usuarioId], references: [id])
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  @@map("orcamento")
 }
 
 model MetaFinanceira {
-  id           Int      @id @default(autoincrement())
-  nome         String
-  valorMeta    Float
-  dataLimite   DateTime
-  usuarioId    Int
-  usuario      Usuario @relation(fields: [usuarioId], references: [id])
+  id         Int      @id @default(autoincrement())
+  nome       String
+  valorMeta  Float
+  dataLimite DateTime
+  usuarioId  Int
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+
+  @@map("meta")
+}
+
+model Administrador {
+  id              Int      @id @default(autoincrement())
+  nome            String
+  email           String   @unique
+  senha           String
+  dataCriacao     DateTime @default(now())
+  dataAtualizacao DateTime @updatedAt
+
+  @@map("administrador")
 }
